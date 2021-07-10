@@ -11,7 +11,9 @@ def init():
 
     return
 
-
+global CONFIG
+CONFIG = load()
+init()
 
 if __name__ == "__main__":
     print(load())

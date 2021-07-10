@@ -17,7 +17,7 @@ IGNITION = 5
 [DataConfig]
 
 # venting data publisher nodes
-PRESSURE_DATAFEED_Port = 1001
+PRESSURE_DATAFEED_PORT = 1001
 
 # Load Cell Data Publisher node
 
@@ -43,7 +43,18 @@ HARDWARE_NETWORK_TARGET = "10.72.0.122"
 LOX_MAX_PSI = 600
 KERO_MAX_PSI = 750
 
+[PressureADCConfig]
+# example values
+LOX_SENSOR1 = [6,7]
+KERO_SENSOR2 = [8,9]
+HE_SENSOR3 = [12,11]
 
+[PressureCalibration]
+# m, b format
+
+SENSOR1_CALI = []
+SENSOR2_CALI = []
+SENSOR3_CALI = []
 
 
 

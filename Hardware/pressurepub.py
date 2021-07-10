@@ -5,6 +5,10 @@ import os
 from pipyadc.ADS1256_definitions import *
 from pipyadc import ADS1256
 from util import *
+import pickle
+import json
+
+
 
 def create_diff(inp1, inp2):
 	# configures ADC_channels
@@ -41,7 +45,7 @@ async def PressureDataPub(**kwargs):
     ADC_channel_names = [t[0] for t in sensor_tuples]
     del sensor_tuples
 
-    def scale(inp: list, names = ADC_channel_names, calibration = calibration):
+    def scaleNSmooth(inp: list, names = ADC_channel_names, calibration = calibration):
         # scales incoming voltages and outputs dict of sensor: PSI reading
         return 
 
@@ -50,7 +54,7 @@ async def PressureDataPub(**kwargs):
             pickle.dumps(
                 json.dumps(
                     {
-                        "DATA": scale(ADS.read_sequence(ADC_channels)),
+                        "DATA": scaleNSmooth(ADS.read_sequence(ADC_channels)),
                         "TIME": TS()
                     }
                 )

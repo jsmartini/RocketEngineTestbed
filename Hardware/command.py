@@ -6,8 +6,8 @@ from util import *
 
 pl = lambda : "placeholder"
 
-global commmands
-commmands = {
+global commands
+commands = {
     "ventlox": pl,          # vents lox
     "ventkero": pl,         # vents kero
     "ignition": pl,         # starts ignition
@@ -20,7 +20,7 @@ commmands = {
 def execute(cmd):
     global commands
     if cmd in commands.keys():
-        commmands[cmd]()
+        commands[cmd]()
         return "Executed"
     else:
         return "No Command Found"

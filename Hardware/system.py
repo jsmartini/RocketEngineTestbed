@@ -24,7 +24,7 @@ async def SystemStatePub(**kwargs):
     
     node_name = kwargs['node_name']
     update_tick = kwargs['update_tick']
-    cell_name = kwargs['cell_name']
+
         #set up zmq context
     port = kwargs['port']
     ctx = zmq.Context()
