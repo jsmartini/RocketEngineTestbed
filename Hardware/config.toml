@@ -1,0 +1,49 @@
+[HardwareConfig]
+# GPIO PIN CONFIGURATION
+#lox venting valve
+LOX_VENT = 0
+KERO_VENT = 1
+
+#combustion chamber entry valve
+LOX_ENTRY = 2
+KERO_ENTRY = 3
+
+# tank pressing valve
+HE_ENTRY = 4
+
+#ignition pin
+IGNITION = 5
+
+[DataConfig]
+
+# venting data publisher nodes
+PRESSURE_DATAFEED_Port = 1001
+
+# Load Cell Data Publisher node
+
+LOAD_CELL_DATAFEED_PORT = 1002
+
+#Command and Control Nodes and System Reporting
+CMD_PROMPT_PORT = 1003
+
+SYSTEM_STATE_PORT = 1004
+
+[NetworkConfig]
+# over tcp
+# set RPI3 networking to a static IPV4 Port and then connect to it on this
+# i.e. 10.0.69.1 is the command station and 10.0.69.34 is the RPI3
+# TCP over 0MQ (ZeroMQ)
+HARDWARE_NETWORK_TARGET = "10.72.0.122"
+
+
+
+[PressureConfig]
+# constants to abide by dude
+
+LOX_MAX_PSI = 600
+KERO_MAX_PSI = 750
+
+
+
+
+
