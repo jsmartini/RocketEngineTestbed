@@ -43,16 +43,18 @@ async def main():
             ),
             SystemStatePub(
                 node_name = "System State Reporter",
-                update_tick=0.5,
+                update_tick=0.1,
                 port = CONFIG.DataConfig.SYSTEM_STATE_PORT
             ),
             PressureControllerSub(
-                
+                node_name = "Pressure PID Controllers",
+                update_tick=0.1,
+                port = CONFIG.DataConfig.PRESSURE_DATAFEED_PORT
             )
         ]
     )
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+loop.run_forever(main())
 
 

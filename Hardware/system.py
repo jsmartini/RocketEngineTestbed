@@ -15,6 +15,9 @@ SYS = {
         "IGNITION_STARTED": False,
         "KERO_ENTRY_OPEN": False,
         "LOX_ENTRY_OPEN": False,
+    },
+    "PressureControl": {
+        "PID_ON": True,
     }
 }
 
