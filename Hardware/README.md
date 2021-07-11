@@ -20,22 +20,37 @@ Endpoints and Data Packets
 
 Pressure Data Packet:
 
+data sub-dict
+{
+            "LOX_PSI": 0,
+            "KERO_PSI": 0
+}
 
 
+scaleNSmooth function outputs the data sub-dict above which contains the pressure data
+{
+                        "DATA": scaleNSmooth(ADS.read_sequence(ADC_channels)),
+                        "TIME": TS()
+}
 
 
 
 Load Cell Data Packet:
 
-
-
-
-
+{
+                        "NODE_NAME"    : node_name,
+                        "SENSOR_NAME"  : cell_name,
+                        "VOLTAGE_RATIO": vr,
+                        "TIME": TS()
+}
 
 
 System Reporting Data Packet
 
-
+{
+                        "SYSTEM": SYS,
+                        "TIME": TS()
+}
 
 
 

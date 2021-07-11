@@ -25,10 +25,10 @@ async def LoadCellPub(**kwargs):
             pickle.dumps(
                 json.dumps(
                     {
-                        "node_name"    : node_name,
-                        "sensor_name"  : cell_name,
-                        "voltage_ratio": vr,
-                        "time": TS()
+                        "NODE_NAME"    : node_name,
+                        "SENSOR_NAME"  : cell_name,
+                        "VOLTAGE_RATIO": vr,
+                        "TIME": TS()
                     }
                 )
             )
