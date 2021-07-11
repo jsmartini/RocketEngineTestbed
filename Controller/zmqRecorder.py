@@ -3,14 +3,14 @@ from recorder import Recorder
 from config import *
 import json
 import pickle
-import deque
+from queue import deque
 import asyncio
 
 class ZMQRecorder(Recorder):
 
     def __init__(self, **kwargs):
         global CONFIG
-        super(PressureRecorder, self).__init__(**kwargs)
+        super(ZMQRecorder, self).__init__(**kwargs)
         ctx = zmq.Context()
         socket = ctx.socket(zmq.SUB)
         try:
