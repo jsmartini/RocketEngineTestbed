@@ -25,9 +25,10 @@ class ZMQRecorder(Recorder):
                 success = True
             except BaseException as e:
                 print(e)
+                print(self.__class__.__name)
                 if (dec:=input("Try to Connect Again (y/n)")) != "y": exit(-1)
 
-        print("Loaded Pressure Recorder successfully")
+        print(f"Loaded {self.__class__.__name__} Recorder successfully")
         self.update_tick = kwargs['update_tick']
         self.current_datafeed = deque() # for real time data visualization
         
