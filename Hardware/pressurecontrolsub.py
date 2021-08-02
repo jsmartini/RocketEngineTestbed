@@ -65,7 +65,7 @@ async def PressureControllerSub(**kwargs):
 
             await asyncio.sleep(update_tick)
     
-        await asyncio.sleep(update_tick*5)
+        await asyncio.sleep(update_tick*100)
 
     
 

@@ -48,7 +48,6 @@ async def PressureDataPub(**kwargs):
     def scaleNSmooth(inp: list, names = ADC_channel_names, calibration = calibration):
         # scales incoming voltages and outputs dict of sensor: PSI reading
         return {
-            "Time": 0,
             "LOX_PSI": 0,
             "KERO_PSI": 0
         }

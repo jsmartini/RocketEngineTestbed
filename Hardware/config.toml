@@ -1,18 +1,18 @@
 [HardwareConfig]
 # GPIO PIN CONFIGURATION
 #lox venting valve
-LOX_VENT = 0
-KERO_VENT = 1
+Solenoid_LOX_VENT = 21
+Solenoid_KERO_VENT = 8
 
 #combustion chamber entry valve
-LOX_ENTRY = 2
-KERO_ENTRY = 3
+Solenoid_LOX_ENTRY = 7
+Solenoid_KERO_ENTRY = 3
 
 # tank pressing valve
-HE_ENTRY = 4
+Solenoid_HE_ENTRY = 12
 
 #ignition pin
-IGNITION = 5
+SIGNAL_IGNITION = 26
 
 [DataConfig]
 
