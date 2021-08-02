@@ -24,7 +24,8 @@ def pressure_data_generator():
         }
 
     yield {
-        "DATA": scaleNSmooth_dummy(),
+        "LOX_PSI": random(),
+        "KERO_PSI": random(),
         "TIME": TS()
     }
 

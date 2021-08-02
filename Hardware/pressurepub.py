@@ -47,17 +47,19 @@ async def PressureDataPub(**kwargs):
 
     def scaleNSmooth(inp: list, names = ADC_channel_names, calibration = calibration):
         # scales incoming voltages and outputs dict of sensor: PSI reading
-        return {
+        yield{
             "LOX_PSI": 0,
             "KERO_PSI": 0
         }
 
     while True:
+        data = next(scaleNSmooth(ADS.read_sequence(ADC_channels)))
         socket.send(
             pickle.dumps(
                 json.dumps(
                     {
-                        "DATA": scaleNSmooth(ADS.read_sequence(ADC_channels)),
+                        "LOX_PSI": data["LOX_PSI"],
+                        "KERO_PSI": data["KERO_PSI"],
                         "TIME": TS()
                     }
                 )

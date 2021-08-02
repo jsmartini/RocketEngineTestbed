@@ -13,14 +13,17 @@ global loadcell_data
 pressure_data = PressureRecorder(
     filename = f"PressureData-{TS()}.dat",
     header = ["Time", "LoxPressure(PSI)", "KeroPressure(PSI)"],
-    update_tick=0.1
+    update_tick=0.1,
+    port=CONFIG["DataConfig"]["PRESSURE_DATAFEED_PORT"]
 )
 loadcell_data = LoadCellRecorder(
     filename = f"LoadCellData-{TS()}.dat",
     header = ["Time", "Voltage Ratio (V)"],
-    update_tick=0.1
+    update_tick=0.1,
+    port=CONFIG["DataConfig"]["LOAD_CELL_DATAFEED_PORT"]
 )
 
+"""
 # load system status subscriber
 
 # load remoteCLI REQ/REP terminal or control panel
@@ -143,3 +146,8 @@ if __name__ == "__main__":
     asyncio.run_until_complete(run_async())
     dpg.set_primary_window(main_window, True)
     dpg.start_dearpygui()
+
+"""
+run_async = lambda: asyncio.gather(*[loadcell_data.sub(), pressure_data.sub()])
+asyncio.get_event_loop()\
+       .run_until_complete(run_async())

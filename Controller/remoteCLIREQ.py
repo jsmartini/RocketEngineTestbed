@@ -20,10 +20,12 @@ def connect():
             ctx = zmq.Context()
             socket = ctx.socket(zmq.REQ)
             socket.connect(f"tcp://{target}:{port}")
+            print("RemoteCLI Terminal Connected successfully")
             return socket
         except BaseException as e:
             print(e)
             print(f"Failed to connect on try : {i}")
+            sleep(3)
     print("Failed to Establish REP zmq Connection with Sim/hardware")
     exit(-1)
 
