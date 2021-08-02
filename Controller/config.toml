@@ -1,15 +1,10 @@
 [DataConfig]
-
 # venting data publisher nodes
 PRESSURE_DATAFEED_PORT = 1001
-
 # Load Cell Data Publisher node
-
 LOAD_CELL_DATAFEED_PORT = 1002
-
 #Command and Control Nodes and System Reporting
 CMD_PROMPT_PORT = 1003
-
 SYSTEM_STATE_PORT = 1004
 
 [NetworkConfig]
@@ -18,3 +13,7 @@ SYSTEM_STATE_PORT = 1004
 # i.e. 10.0.69.1 is the command station and 10.0.69.34 is the RPI3
 # TCP over 0MQ (ZeroMQ)
 HARDWARE_NETWORK_TARGET = "10.72.0.122"
+TEST_NETWORK_TARGET = "127.0.0.1"
+
+[SIM]
+testing = 1
