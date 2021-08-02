@@ -41,7 +41,7 @@ async def PressureControllerSub(**kwargs):
     port = kwargs['port']
     ctx = zmq.Context()
     socket =  ctx.socket(zmq.SUB)
-    socket.connect(f"tcp://127.0.0.1:{port}")
+    socket.connect(f"tcp://*:{port}")
 
     LOXPID = PID(
         gains = CONFIG.LOXPIDGains,

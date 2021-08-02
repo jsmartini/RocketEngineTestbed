@@ -17,7 +17,7 @@ async def LoadCellPub(**kwargs):
     ctx = zmq.Context()
     socket =  ctx.socket(zmq.PUB)
         #host publisher on localhost @ port
-    socket.bind(f"tcp://127.0.0.1:{port}")
+    socket.bind(f"tcp://*:{port}")
         
         #holds messages if system can't keep up      
     def onVoltage(self, vr):
