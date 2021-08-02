@@ -13,13 +13,15 @@ class ZMQRecorder(Recorder):
         super(ZMQRecorder, self).__init__(**kwargs)
         ctx = zmq.Context()
         socket = ctx.socket(zmq.SUB)
-        try:
-            socket.connect(f"tcp://{CONFIG.NetworkConfig.HARDWARE_NETWORK_TARGET}:{kwargs['port']}")
-            socket.subscribe("")
-        except BaseException as e:
-            print(e)
-            input("kill due to error")
-            exit(-1)
+        success = False
+        while not success:
+            try:
+                socket.connect(f"tcp://{CONFIG.NetworkConfig.HARDWARE_NETWORK_TARGET}:{kwargs['port']}")
+                socket.subscribe("")
+                success = True
+            except BaseException as e:
+                print(e)
+                if (dec:=input("Try to Connect Again (y/n)")) != "y": exit(-1)
 
         print("Loaded Pressure Recorder successfully")
         self.update_tick = kwargs['update_tick']

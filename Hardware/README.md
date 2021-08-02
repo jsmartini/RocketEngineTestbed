@@ -24,6 +24,8 @@ data sub-dict
 {
             "LOX_PSI": 0,
             "KERO_PSI": 0
+            "KERO_ERROR: 0,
+            "LOX_ERROR": 0
 }
 
 
