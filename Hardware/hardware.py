@@ -63,15 +63,30 @@ def kero_vent_off():
     GPIO.output(HardwareConfig["Solenoid_KERO_VENT"], 1)
     SYS["Pressure"]["KERO_VENT_OPEN"] = False
 
+def lox_entry_close():
+    GPIO.output(HardwareConfig["Solenoid_LOX_ENTRY"], 1)
+    SYS["Ignition"]["LOX_ENTRY_OPEN"] = False
+
+def kero_entry_close():
+    GPIO.output(HardwareConfig["Solenoid_KERO_ENTRY"], 1)
+    SYS["Ignition"]["KERO_ENTRY_OPEN"] = False
+
+def lox_entry_open():
+    GPIO.output(HardwareConfig["Solenoid_LOX_ENTRY"], 0)
+    SYS["Ignition"]["LOX_ENTRY_OPEN"] = True
+
+def kero_entry_open():
+    GPIO.output(HardwareConfig["Solenoid_KERO_ENTRY"], 0)
+    SYS["Ignition"]["KERO_ENTRY_OPEN"] = True
+
 from time import sleep
 def ignition():
     global SYS, HardwareConfig
     SYS["Ignition"]["IGNITION_STARTED"] = True
     def deploy_propellant():
-        GPIO.output(HardwareConfig["Solenoid_KERO_ENTRY"], 0)
-        SYS["Ignition"]["KERO_ENTRY_OPEN"] = True
-        GPIO.output(HardwareConfig["Solenoid_LOX_ENTRY"], 0)
-        SYS["Ignition"]["LOX_ENTRY_OPEN"] = True
+        print("deploying propellants")
+        lox_entry_open()
+        kero_entry_open()
 
     for _ in range(10):
         sleep(1)
@@ -81,6 +96,6 @@ def ignition():
 
     print("Here comes the fireworks")
     
-    
+
     
 
