@@ -7,6 +7,7 @@ if os.uname().machine == "x86_64":
     # simulate rpi gpio
     print("Detected X86 based processor, emulating GPIO")
     from rpisim import GPIO
+    # making sure out is the same as in RPi.GPIO for compatibility
     GPIO.OUT = GPIO.MODE_OUT
 else:
     import RPi.GPIO as GPIO
@@ -35,25 +36,51 @@ def reset_gpio():
 def press_propellant_tanks():
     global SYS, HardwareConfig
     GPIO.output(HardwareConfig["Solenoid_HE_ENTRY"], 0)
-    SYS["TANKS_PRESSURIZED"] = True
+    SYS["Pressure"]["TANKS_PRESSURIZED"] = True
 
 def depress_propellant_tanks():
     global SYS, HardwareConfig
     GPIO.output(HardwareConfig["Solenoid_HE_ENTRY"], 1)
-    SYS["TANKS_PRESSURIZED"] = False
+    SYS["Pressure"]["TANKS_PRESSURIZED"] = False
 
 def lox_vent_on():
     global SYS, HardwareConfig
+    GPIO.output(HardwareConfig["Solenoid_LOX_VENT"], 0)
+    SYS["Pressure"]["LOX_VENT_OPEN"] = True
 
 def lox_vent_off():
     global SYS, HardwareConfig
+    GPIO.output(HardwareConfig["Solenoid_LOX_VENT"], 1)
+    SYS["Pressure"]["LOX_VENT_OPEN"] = False
 
 def kero_vent_on():
     global SYS, HardwareConfig
+    GPIO.output(HardwareConfig["Solenoid_KERO_VENT"], 0)
+    SYS["Pressure"]["KERO_VENT_OPEN"] = True
 
 def kero_vent_off():
     global SYS, HardwareConfig
+    GPIO.output(HardwareConfig["Solenoid_KERO_VENT"], 1)
+    SYS["Pressure"]["KERO_VENT_OPEN"] = False
 
+from time import sleep
 def ignition():
     global SYS, HardwareConfig
+    SYS["Ignition"]["IGNITION_STARTED"] = True
+    def deploy_propellant():
+        GPIO.output(HardwareConfig["Solenoid_KERO_ENTRY"], 0)
+        SYS["Ignition"]["KERO_ENTRY_OPEN"] = True
+        GPIO.output(HardwareConfig["Solenoid_LOX_ENTRY"], 0)
+        SYS["Ignition"]["LOX_ENTRY_OPEN"] = True
+
+    for _ in range(10):
+        sleep(1)
+    GPIO.output(HardwareConfig["SIGNAL_IGNITION"], 1)
+    sleep(1)
+    deploy_propellant()
+
+    print("Here comes the fireworks")
+    
+    
+    
 
