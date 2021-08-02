@@ -46,6 +46,8 @@ class ZMQRecorder(Recorder):
             
             #print(data.values()) debug
             self.current_datafeed.append(data)
-            self(",".join([str(i) for i in data.values()]))    # record data into csv file
+
+            # this is a major bug - doesnt write to csv in correct format 
+            self(",".join([str(i) for i in list(data.values())]))    # record data into csv file
             await asyncio.sleep(self.update_tick)
 

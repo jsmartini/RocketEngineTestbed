@@ -32,25 +32,27 @@ def recorders(thread_loop):
         run_async()
     )
 
-banner = r"""\
-No Gui Static Testbed Control Software (client)
-______ _   _______ _____ _   _ _____   _____ ______________  ___
-| ___ \ | / /_   _|  ___| \ | |  __ \ |_   _|  ___| ___ \  \/  |
-| |_/ / |/ /  | | | |__ |  \| | |  \/   | | | |__ | |_/ / .  . |
-|    /|    \  | | |  __|| . ` | | __    | | |  __||    /| |\/| |
-| |\ \| |\  \ | | | |___| |\  | |_\ \   | | | |___| |\ \| |  | |
-\_| \_\_| \_/ \_/ \____/\_| \_/\____/   \_/ \____/\_| \_\_|  |_/
 
-Jonathan Martini | Alabama Rocketry Association 2021 | ROLL TIDE!
-"""
-from time import sleep
-import threading
+if __name__ == '__main__':
+    banner = r"""
+    No Gui Static Testbed Control Software (client)
+    ______ _   _______ _____ _   _ _____   _____ ______________  ___
+    | ___ \ | / /_   _|  ___| \ | |  __ \ |_   _|  ___| ___ \  \/  |
+    | |_/ / |/ /  | | | |__ |  \| | |  \/   | | | |__ | |_/ / .  . |
+    |    /|    \  | | |  __|| . ` | | __    | | |  __||    /| |\/| |
+    | |\ \| |\  \ | | | |___| |\  | |_\ \   | | | |___| |\ \| |  | |
+    \_| \_\_| \_/ \_/ \____/\_| \_/\____/   \_/ \____/\_| \_\_|  |_/
 
-print(banner)
-recording_async_loop = asyncio.new_event_loop()
-recorders = threading.Thread(target=recorders, args=(recording_async_loop,), name="recorders")
-recorders.start()
-sleep(1.5)
-RemoteCLI().cmdloop()
-recorders.stop()
+    Jonathan Martini | Alabama Rocketry Association 2021 | ROLL TIDE!
+    """
+    from time import sleep
+    import threading
+
+    print(banner)
+    recording_async_loop = asyncio.new_event_loop()
+    recorders = threading.Thread(target=recorders, args=(recording_async_loop,), name="recorders")
+    recorders.start()
+    sleep(1.5)
+    RemoteCLI().cmdloop()
+    recorders.stop()
 
