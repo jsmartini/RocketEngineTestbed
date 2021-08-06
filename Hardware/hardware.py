@@ -29,6 +29,21 @@ for k in HardwareConfig.keys():
         GPIO.setup(HardwareConfig[k], GPIO.OUT)
         GPIO.output(HardwareConfig[k], 0)
 
+def enable_2way():
+    global CONFIG
+    way2= CONFIG["2WAY"]
+    print("Enabling 2 Way Solenoids")
+    for pin in way2.keys():
+        GPIO.setup(way2[pin], GPIO.OUT)
+        GPIO.output(way2[pin], 0)
+    
+def disable_2way():
+    global CONFIG
+    way2 = CONFIG["2WAY"]
+    print("Disabling 2 Way Solenoids")
+    for pin in way2.keys():
+        GPIO.output(way2[pin], 0)
+
 def reset_gpio():
     GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
@@ -98,4 +113,5 @@ def ignition():
     
 
     
-
+# initialize 2 way
+enable_2way()

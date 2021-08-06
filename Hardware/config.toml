@@ -14,6 +14,14 @@ Solenoid_HE_ENTRY = 12
 #ignition pin
 SIGNAL_IGNITION = 26
 
+[2WAY]
+LOXVENT = 0
+KEROVENT = 1
+KEROMAIN = 2
+LOXMAIN = 3
+PRESS = 4
+
+
 [DataConfig]
 
 # venting data publisher nodes
