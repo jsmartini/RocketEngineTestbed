@@ -52,7 +52,7 @@ async def testing_pub(**kwargs):
 
     while True:
         data = next(data_generator())
-        print(data)
+        #print(data)
         socket.send(
                 pickle.dumps(
                     json.dumps(

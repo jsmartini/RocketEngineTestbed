@@ -53,8 +53,9 @@ def blocking_async(thread_loop):
                 port = CONFIG["DataConfig"]["CMD_PROMPT_PORT"]
             )
     print("Running RemoteCLI Daemon")
-    thread_loop.run_until_complete(remoteCLICoro)    
-        
+    thread_loop.run_until_complete(asyncio.gather(*[remoteCLICoro]))
+    print("Error")
+
 non_blocking_loop = asyncio.new_event_loop()
 blocking_loop = asyncio.new_event_loop()
 import threading
