@@ -2,13 +2,15 @@ import zmq
 import asyncio
 import sys
 import os
-from pipyadc.ADS1256_definitions import *
-from pipyadc import ADS1256
+#from pipyadc.ADS1256_definitions import *
+from pipyadc import *
+from adcDefinitions import *
+#from pipyadc import ADS1256
 from util import *
 import pickle
 import json
-
-
+from collections import deque
+import numpy as np
 
 def create_diff(inp1, inp2):
 	# configures ADC_channels
@@ -45,8 +47,14 @@ async def PressureDataPub(**kwargs):
     ADC_channel_names = [t[0] for t in sensor_tuples]
     del sensor_tuples
 
+    sensor_history_lox = deque(maxlen = 100)
+    sensor_history_kero = deque(maxlen = 100)
+
     def scaleNSmooth(inp: list, names = ADC_channel_names, calibration = calibration):
         # scales incoming voltages and outputs dict of sensor: PSI reading
+        readings = ADS.read_sequence()
+
+
         yield{
             "LOX_PSI": 0,
             "KERO_PSI": 0
@@ -69,13 +77,15 @@ async def PressureDataPub(**kwargs):
 
 
 
+if __name__ == "__main__":
+    # verification code
+    zero = (-943, 0)
+    point = (1873, 100)
+    m = (point[0]-zero[0])/(point[1])
+    b = -22
 
-
-
-
-    
-
-
-
-
-
+    scale = lambda val: val/m - b
+    ADS = ADS1256()
+    ch = [create_diff(7,6)]
+    while True:
+        print(ADS.read_sequence(ch))

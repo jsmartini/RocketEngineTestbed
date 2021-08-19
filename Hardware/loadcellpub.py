@@ -41,3 +41,13 @@ async def LoadCellPub(**kwargs):
     # work forever
     while True:
         await asyncio.sleep(update_tick)
+
+from time import sleep
+
+if __name__ == "__main__":
+    onVoltage = lambda self, vr: print(vr)
+    volr = VoltageRatioInput()
+    volr.setOnVoltageRatioChangeHandler(onVoltage)
+    volr.openWaitForAttachment(5000)
+    while 1:
+        sleep(0.5)

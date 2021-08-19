@@ -16,5 +16,5 @@ HARDWARE_NETWORK_TARGET = "10.72.0.122"
 TEST_NETWORK_TARGET = "10.42.0.69"
 
 [SIM]
-testing = 1
+testing = 0
 
