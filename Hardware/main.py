@@ -34,10 +34,10 @@ def non_blocking_async(thread_loop):
                 update_tick=0.1,
                 port = CONFIG["DataConfig"]["SYSTEM_STATE_PORT"]
             ),
-            PressureControllerSub(
+            PressureControllerPub(
                 node_name = "Pressure PID Controllers",
                 update_tick=0.1,
-                port = CONFIG["DataConfig"]["PRESSURE_DATAFEED_PORT"]
+                port = CONFIG["DataConfig"]["PRESSURE_ERROR_DATAFEED_PORT"]
             ),
             LoadCellPub(
                 node_name="Load Cell Sensor Data Aquisition",

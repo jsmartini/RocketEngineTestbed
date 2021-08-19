@@ -26,6 +26,7 @@ PRESS = 4
 
 # venting data publisher nodes
 PRESSURE_DATAFEED_PORT = 1001
+PRESSURE_ERROR_DATAFEED_PORT = 1005
 
 # Load Cell Data Publisher node
 
@@ -53,28 +54,24 @@ KERO_MAX_PSI = 750
 
 [PressureADCConfig]
 # example values
-LOX_SENSOR1 = [6,7]
-KERO_SENSOR2 = [8,9]
-HE_SENSOR3 = [12,11]
+LOX_PSI1 = [6,7]
 
 [MA]
 # m, b format
 MA_FILTER_LEN = 20
 
 [PressureCalibration]
-SENSOR1_CALI = []
-SENSOR2_CALI = []
-SENSOR3_CALI = []
-
+LOX_PSI1 = [-943, 0,1873, 100, 3]
+#KERO_PSI2 =
 
 # pid controller gains
 [LOXPIDGains]
-p = 0.3
-i = 3
-d = 0.4
+p = 1.5
+i = 0
+d = 0
 
 [KEROPIDGains]
-p = 0.4
-i = 3
-d = 0.2
+p = 1.5
+i = 0
+d = 0
 

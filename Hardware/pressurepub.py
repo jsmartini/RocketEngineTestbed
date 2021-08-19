@@ -14,6 +14,11 @@ import numpy as np
 from config import *
 from functools import lru_cache
 
+global CURRENT_PRESSURE_READINGS
+CURRENT_PRESSURE_READINGS = {
+                "LOX_PSI": 0,
+                "KERO_PSI": 0
+            }
 
 def create_diff(inp1, inp2):
 	# configures ADC_channels
@@ -45,8 +50,14 @@ async def PressureDataPub(**kwargs):
     
     sensor_tuples = kwargs['sensor_tuples']
     # example sensor tuple (name, positive connection, negative connection)
-    ADC_channels = [create_diff(t[1], t[2]) for t in sensor_tuples]
-    ADC_channel_names = [t[0] for t in sensor_tuples]
+    try:
+
+        ADC_channels = [create_diff(t[1], t[2]) for t in sensor_tuples]
+        ADC_channel_names = [t[0] for t in sensor_tuples]
+
+    except BaseException as e:
+        print(e)
+        exit(-1)
     del sensor_tuples
 
     calc_m_b = lambda vals: (
@@ -57,28 +68,35 @@ async def PressureDataPub(**kwargs):
     sensor_calibration = [CONFIG["PressureCalibration"][k] for k in CONFIG["PressureCalibration"].keys()]
     sensor_calibration = [calc_m_b(mb) for mb in sensor_calibration]
 
-    def MA(nxt):
-        history = CONFIG["MA"]["MA_FILTER_LEN"]
-        while True:
-            history.append(nxt)
-            yield np.average(history)
+    ma_max_len = CONFIG["MA"]["MA_FILTER_LEN"]
+    sensor_lox = deque(maxlen=ma_max_len)
+    sensor_kero = deque(maxlen=ma_max_len)
 
+    def MA(nxt, history):
+        history.append(nxt)
+        return np.average(history)
     
     scale = lambda v, m, b: m*v + b
+
+    filters = {
+            "KERO_PSI": lambda x: MA(x, history=sensor_lox),
+            "LOX_PSI": lambda x: MA(x, history=sensor_kero)
+        }
         
     def scaleNSmooth(inp: list, names = ADC_channel_names, calibration = calibration):
         # scales incoming voltages and outputs dict of sensor: PSI reading
-        filters = {name: MA(v) for name, v in zip(names, inp[:len(names)+1])}
+        global CURRENT_PRESSURE_READINGS
+        
         set_l = len(set(names))
         l     = len(names)
         flag  = set_l < l
-        while True:
-            KERO = []
-            LOX = []
+        if True:    # i dont remember the short cut to tab things left
             KERO_PSI, LOX_PSI = 0, 0
             if flag:
+                KERO = []
+                LOX = []
                 for v, n in zip(inp, names):
-                    if n == "KERO_PSI":
+                    if "KERO_PSI" in n :
                         KERO.append(v)
                     else:
                         LOX.append(v)
@@ -86,31 +104,34 @@ async def PressureDataPub(**kwargs):
                 LOX_PSI = next(filters["LOX_PSI"](np.average(LOX)))
             else:
                 for v, n, consts in zip(inp, names, sensor_calibration):
-                    if n == "KERO_PSI":
-                        KERO_PSI = scale(next(filters["KERO_PSI"](v)), *consts)
+                    if "KERO_PSI" in n:
+                        KERO_PSI = scale(filters["KERO_PSI"](v), *consts)
                     else:
-                        LOX_PSI = scale(next(filters["LOX_PSI"](v)), *consts)
-            yield{
+                        LOX_PSI = scale(filters["LOX_PSI"](v), *consts)
+            return{
                 "LOX_PSI": LOX_PSI,
                 "KERO_PSI": KERO_PSI
             }
 
     while True:
-        data = next(scaleNSmooth(ADS.read_sequence(ADC_channels)))
+        t = TS()
+        data = scaleNSmooth(ADS.read_sequence(ADC_channels))
+        data = {
+                        "LOX_PSI": data["LOX_PSI"],
+                        "KERO_PSI": data["KERO_PSI"],
+                        
+        }
+        CURRENT_PRESSURE_READINGS = data
+        data["TIME"] = t
+        print(CURRENT_PRESSURE_READINGS)
         socket.send(
             pickle.dumps(
                 json.dumps(
-                    {
-                        "LOX_PSI": data["LOX_PSI"],
-                        "KERO_PSI": data["KERO_PSI"],
-                        "TIME": TS()
-                    }
+                    data
                 )
             )
         )
         await asyncio.sleep(update_tick)
-
-
 
 if __name__ == "__main__":
     # verification code
@@ -123,4 +144,4 @@ if __name__ == "__main__":
     ADS = ADS1256()
     ch = [create_diff(7,6)]
     while True:
-        print(ADS.read_sequence(ch))
+        print(scale(ADS.read_sequence(ch)[0]))
