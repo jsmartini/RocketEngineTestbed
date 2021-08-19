@@ -11,6 +11,9 @@ import pickle
 import json
 from collections import deque
 import numpy as np
+from config import *
+from functools import lru_cache
+
 
 def create_diff(inp1, inp2):
 	# configures ADC_channels
@@ -39,7 +42,6 @@ async def PressureDataPub(**kwargs):
     calibration = kwargs['calibration']
 
     ADS = ADS1256()
-
     
     sensor_tuples = kwargs['sensor_tuples']
     # example sensor tuple (name, positive connection, negative connection)
@@ -47,18 +49,51 @@ async def PressureDataPub(**kwargs):
     ADC_channel_names = [t[0] for t in sensor_tuples]
     del sensor_tuples
 
-    sensor_history_lox = deque(maxlen = 100)
-    sensor_history_kero = deque(maxlen = 100)
+    calc_m_b = lambda vals: (
+        (vals[3] - vals[1]) / (vals[2] - vals[0]),  # M
+        vals[4]                                     # B
+    )
 
+    sensor_calibration = [CONFIG["PressureCalibration"][k] for k in CONFIG["PressureCalibration"].keys()]
+    sensor_calibration = [calc_m_b(mb) for mb in sensor_calibration]
+
+    def MA(nxt):
+        history = CONFIG["MA"]["MA_FILTER_LEN"]
+        while True:
+            history.append(nxt)
+            yield np.average(history)
+
+    
+    scale = lambda v, m, b: m*v + b
+        
     def scaleNSmooth(inp: list, names = ADC_channel_names, calibration = calibration):
         # scales incoming voltages and outputs dict of sensor: PSI reading
-        readings = ADS.read_sequence()
-
-
-        yield{
-            "LOX_PSI": 0,
-            "KERO_PSI": 0
-        }
+        filters = {name: MA(v) for name, v in zip(names, inp[:len(names)+1])}
+        set_l = len(set(names))
+        l     = len(names)
+        flag  = set_l < l
+        while True:
+            KERO = []
+            LOX = []
+            KERO_PSI, LOX_PSI = 0, 0
+            if flag:
+                for v, n in zip(inp, names):
+                    if n == "KERO_PSI":
+                        KERO.append(v)
+                    else:
+                        LOX.append(v)
+                KERO_PSI = next(filters["KERO_PSI"](np.average(KERO)))
+                LOX_PSI = next(filters["LOX_PSI"](np.average(LOX)))
+            else:
+                for v, n, consts in zip(inp, names, sensor_calibration):
+                    if n == "KERO_PSI":
+                        KERO_PSI = scale(next(filters["KERO_PSI"](v)), *consts)
+                    else:
+                        LOX_PSI = scale(next(filters["LOX_PSI"](v)), *consts)
+            yield{
+                "LOX_PSI": LOX_PSI,
+                "KERO_PSI": KERO_PSI
+            }
 
     while True:
         data = next(scaleNSmooth(ADS.read_sequence(ADC_channels)))

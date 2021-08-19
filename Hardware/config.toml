@@ -57,9 +57,11 @@ LOX_SENSOR1 = [6,7]
 KERO_SENSOR2 = [8,9]
 HE_SENSOR3 = [12,11]
 
-[PressureCalibration]
+[MA]
 # m, b format
+MA_FILTER_LEN = 20
 
+[PressureCalibration]
 SENSOR1_CALI = []
 SENSOR2_CALI = []
 SENSOR3_CALI = []
