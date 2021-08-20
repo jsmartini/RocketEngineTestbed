@@ -60,7 +60,9 @@ non_blocking_loop = asyncio.new_event_loop()
 blocking_loop = asyncio.new_event_loop()
 import threading
 threading.Thread(target=blocking_async, args=(blocking_loop,), name="RemoteCLI Daemon").start()
+print("started blocking async")
 threading.Thread(target=non_blocking_async, args=(non_blocking_loop,), name="RemoteCLI Daemon").start()
+print("started nonblocking async")
 
 
 

@@ -29,15 +29,15 @@ def non_blocking_async(thread_loop):
     asyncio.set_event_loop(thread_loop)
     thread_loop.run_until_complete(asyncio.gather(
             *[
-                SystemStatePub(
+            SystemStatePub(
                 node_name = "System State Reporter",
                 update_tick=0.1,
                 port = CONFIG["DataConfig"]["SYSTEM_STATE_PORT"]
             ),
-            PressureControllerSub(
+            PressureControllerPub(
                 node_name = "Pressure PID Controllers",
                 update_tick=0.1,
-                port = CONFIG["DataConfig"]["PRESSURE_DATAFEED_PORT"]
+                port = CONFIG["DataConfig"]["PRESSURE_ERROR_DATAFEED_PORT"]
             ),
             LoadCellPub(
                 node_name="Load Cell Sensor Data Aquisition",
@@ -49,7 +49,7 @@ def non_blocking_async(thread_loop):
                 node_name='Pressure Data Aquisition',
                 update_tick=0.1, # a tenth of a second latency
                 port=CONFIG["DataConfig"]["PRESSURE_DATAFEED_PORT"],
-                calibration = CONFIG["PressCalibration"],
+                calibration = CONFIG["PressureCalibration"],
                 sensor_tuples=[[k,*CONFIG["PressureADCConfig"][k]] for k in CONFIG["PressureADCConfig"]]
             )
             ]

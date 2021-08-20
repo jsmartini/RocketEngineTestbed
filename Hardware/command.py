@@ -15,6 +15,8 @@ echo = lambda x: x
 
 global commands
 commands = {
+    "enable_2way": enable_2way,
+    "disable_2way": disable_2way,
     "press": press_propellant_tanks,
     "depress": depress_propellant_tanks,
     "ventlox_open": lox_vent_on,          # vents lox

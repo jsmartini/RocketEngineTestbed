@@ -50,6 +50,12 @@ class RemoteCLI(cmd.Cmd):
 
     prompt = "[TestBed]>"
 
+    def do_enable_2way(self, s):
+        print(command("enable_2way"))
+
+    def do_disable_2way(self, s):
+        print(command("disable_2way"))
+
     def do_press(self, s):
         print(command("press"))
 

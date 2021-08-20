@@ -29,7 +29,7 @@ class DataPublisher(object):
         #holds messages if system can't keep up
         self.stack = deque(kwargs["buffer_size"])
 
-    def push(self, data:dict) -> bool:
+    def push(self, data:dict):
         try:
             self.stack.append(
                 pickle.dumps(
@@ -44,7 +44,8 @@ class DataPublisher(object):
     async def pubthread(self):
         # runs the service
         while True:
-            if (data := self.stack.popleft()) != None:
+            data = self.stack.popleft()
+            if data != None:
                 self.socket.send(data)
             await asyncio.sleep(self.update_tick)
 
