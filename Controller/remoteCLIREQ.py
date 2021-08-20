@@ -52,7 +52,13 @@ class RemoteCLI(cmd.Cmd):
 
     def do_press(self, s):
         print(command("press"))
+
+    def do_enable2way(self, s):
+        print(command("enable_2way"))
     
+    def do_disable2way(self, s):
+        print(command("disable_2way"))
+
     def do_depress(self, s):
         print(command("depress"))
 
