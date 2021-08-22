@@ -4,7 +4,7 @@ import json
 import asyncio
 from util import *
 from hardware import *
-
+from pressurecontrolsub import toggle_pid
 
 def kill_tmp():
     lox_entry_close()
@@ -26,7 +26,13 @@ commands = {
     "ignition": ignition,         # starts ignition
     "fuck": kill_tmp,             # aborts everything and locks down
     "cleanup": pl,           # runs the cleanup procedure
-    "echo": echo
+    "echo": echo,
+    "toggle_pid": toggle_pid,
+    "kero_entry_open": kero_entry_open,
+    "kero_entry_close": kero_entry_close,
+    "lox_entry_open": lox_entry_open,
+    "lox_entry_close": lox_entry_close,
+    "reset": reset_gpio,
 }
 
 command_list = lambda : "\n".join(commands.keys())
@@ -37,8 +43,7 @@ commands["help"] = command_list
 def execute(cmd):
     global commands
     if cmd in commands.keys():
-        commands[cmd]()
-        return "Executed"
+        return f"Executed {commands[cmd]()}"
     else:
         return "No Command Found"
 

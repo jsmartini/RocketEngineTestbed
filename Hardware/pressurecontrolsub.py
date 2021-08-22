@@ -9,6 +9,11 @@ from system import *
 from pressurepub import CURRENT_PRESSURE_READINGS # get readings
 from hardware import kero_vent_off, kero_vent_on, lox_vent_on, lox_vent_off
 
+def toggle_pid():
+    global SYS
+    SYS["PressureControl"]["PID_ON"] = not SYS["PressureControl"]["PID_ON"]
+    return SYS["PressureControl"]["PID_ON"]
+
 class PID:
 
     def __init__(self, **kwargs):

@@ -42,7 +42,7 @@ def disable_2way():
     way2 = CONFIG["2WAY"]
     print("Disabling 2 Way Solenoids")
     for pin in way2.keys():
-        GPIO.output(way2[pin], 0)
+        GPIO.output(way2[pin], 1)
 
 def reset_gpio():
     GPIO.cleanup()
@@ -103,15 +103,14 @@ def ignition():
         lox_entry_open()
         kero_entry_open()
 
-    for _ in range(10):
-        sleep(1)
+    
     GPIO.output(HardwareConfig["SIGNAL_IGNITION"], 1)
     sleep(1)
     deploy_propellant()
 
-    print("Here comes the fireworks")
+    print("BOOM")
     
 
     
 # initialize 2 way
-enable_2way()
+#enable_2way()

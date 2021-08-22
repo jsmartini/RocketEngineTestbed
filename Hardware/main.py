@@ -27,6 +27,7 @@ def blocking_async(thread_loop):
 def non_blocking_async(thread_loop):
     global CONFIG
     asyncio.set_event_loop(thread_loop)
+    print("running non blocking thread")
     thread_loop.run_until_complete(asyncio.gather(
             *[
             SystemStatePub(

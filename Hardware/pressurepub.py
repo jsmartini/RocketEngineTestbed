@@ -123,7 +123,7 @@ async def PressureDataPub(**kwargs):
         }
         CURRENT_PRESSURE_READINGS = data
         data["TIME"] = t
-        print(CURRENT_PRESSURE_READINGS)
+#        print(CURRENT_PRESSURE_READINGS)
         socket.send(
             pickle.dumps(
                 json.dumps(
