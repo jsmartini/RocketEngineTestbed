@@ -12,7 +12,7 @@ SYSTEM_STATE_PORT = 1004
 # set RPI3 networking to a static IPV4 Port and then connect to it on this
 # i.e. 10.0.69.1 is the command station and 10.0.69.34 is the RPI3
 # TCP over 0MQ (ZeroMQ)
-HARDWARE_NETWORK_TARGET = "10.72.0.122"
+HARDWARE_NETWORK_TARGET = "10.42.0.67"
 TEST_NETWORK_TARGET = "10.42.0.69"
 
 [SIM]
