@@ -30,13 +30,21 @@ for k in HardwareConfig.keys():
         # ignition
         GPIO.setup(HardwareConfig[k], GPIO.OUT)
         GPIO.output(HardwareConfig[k], 0)
+    
+for k in CONFIG["2WAY"]:
+    try:
+        GPIO.setup(CONFIG["2WAY"][k], GPIO.OUT)
+    except BaseException as e:
+        pass
+    GPIO.output(CONFIG["2WAY"][k], 1)
+
 
 def enable_2way():
     global CONFIG
     way2= CONFIG["2WAY"]
     print("Enabling 2 Way Solenoids")
     for pin in way2.keys():
-        GPIO.setup(way2[pin], GPIO.OUT)
+        #GPIO.setup(way2[pin], GPIO.OUT)
         GPIO.output(way2[pin], 0)
     
 def disable_2way():

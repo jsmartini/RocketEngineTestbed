@@ -10,6 +10,11 @@ def kill_tmp():
     lox_entry_close()
     kero_entry_close()
 
+def dump_sys():
+    global SYS
+    return json.dumps(SYS, indent=4)
+
+
 pl = lambda: "place holder function reference"
 echo = lambda x: x
 
@@ -33,6 +38,7 @@ commands = {
     "lox_entry_open": lox_entry_open,
     "lox_entry_close": lox_entry_close,
     "reset": reset_gpio,
+    "SYS": dump_sys
 }
 
 command_list = lambda : "\n".join(commands.keys())
