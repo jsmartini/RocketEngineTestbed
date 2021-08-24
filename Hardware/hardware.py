@@ -9,6 +9,8 @@ if os.uname().machine == "x86_64":
     from rpisim import GPIO
     # making sure out is the same as in RPi.GPIO for compatibility
     GPIO.OUT = GPIO.MODE_OUT
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
 else:
     import RPi.GPIO as GPIO
     GPIO.setmode(GPIO.BCM)
