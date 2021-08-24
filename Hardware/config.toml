@@ -5,7 +5,7 @@ Solenoid_LOX_VENT = 21
 Solenoid_KERO_VENT = 26
 
 #combustion chamber entry valve
-Solenoid_LOX_ENTRY = 10
+Solenoid_LOX_ENTRY = 23
 Solenoid_KERO_ENTRY = 16
 
 # tank pressing valve
@@ -16,7 +16,7 @@ SIGNAL_IGNITION = 13
 
 [2WAY]
 LOXVENT = 12
-KEROVENT = 16
+KEROVENT = 27
 KEROMAIN = 5
 LOXMAIN = 8
 PRESS = 25
