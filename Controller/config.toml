@@ -13,8 +13,8 @@ SYSTEM_STATE_PORT = 1004
 # i.e. 10.0.69.1 is the command station and 10.0.69.34 is the RPI3
 # TCP over 0MQ (ZeroMQ)
 HARDWARE_NETWORK_TARGET = "10.42.0.67"
-TEST_NETWORK_TARGET = "10.42.0.69"
+TEST_NETWORK_TARGET = "127.0.0.1"
 
 [SIM]
-testing = 0
+testing = 1
 

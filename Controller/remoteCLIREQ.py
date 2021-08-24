@@ -82,6 +82,12 @@ class RemoteCLI(cmd.Cmd):
     
     def do_ignition(self, s):
         print(command("ignition"))
+    
+    def do_cmd(self, s):
+        rep = command(s)
+        for i in rep.keys():
+            print(rep[i])
+
 
 if __name__ == "__main__":
     RemoteCLI().cmdloop()

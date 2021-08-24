@@ -11,18 +11,21 @@ TS = lambda: datetime.datetime.now().timestamp()
 global pressure_data
 global loadcell_data
 
+global testname
+
+testname = input("Name of this test?>")
 
 def recorders(thread_loop):
     print("Recording Daemon Started")
     asyncio.set_event_loop(thread_loop)
     pressure_data = PressureRecorder(
-        filename = f"PressureData-{TS()}.dat",
+        filename = f"PressureData-{testname}.dat",
         header = ["Time", "LoxPressure(PSI)", "KeroPressure(PSI)"],
         update_tick=0.1,
         port=CONFIG["DataConfig"]["PRESSURE_DATAFEED_PORT"]
     )
     loadcell_data = LoadCellRecorder(
-        filename = f"LoadCellData-{TS()}.dat",
+        filename = f"LoadCellData-{testname}.dat",
         header = ["Time", "Voltage Ratio (V)"],
         update_tick=0.1,
         port=CONFIG["DataConfig"]["LOAD_CELL_DATAFEED_PORT"]
