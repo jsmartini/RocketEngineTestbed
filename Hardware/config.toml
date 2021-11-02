@@ -1,25 +1,26 @@
+
 [HardwareConfig]
 # GPIO PIN CONFIGURATION
 #lox venting valve
-Solenoid_LOX_VENT = 21
-Solenoid_KERO_VENT = 26
+Solenoid_LOX_VENT = 16
+Solenoid_KERO_VENT = 12
 
 #combustion chamber entry valve
-Solenoid_LOX_ENTRY = 23
-Solenoid_KERO_ENTRY = 16
+Solenoid_LOX_ENTRY = 21
+Solenoid_KERO_ENTRY = 20
 
 # tank pressing valve
-Solenoid_HE_ENTRY = 19
+Solenoid_HE_ENTRY = 1
 
 #ignition pin
-SIGNAL_IGNITION = 13
+SIGNAL_IGNITION = 2
 
 [2WAY]
-LOXVENT = 12
-KEROVENT = 27
-KEROMAIN = 5
-LOXMAIN = 8
-PRESS = 25
+LOXVENT = 13
+KEROVENT = 6
+KEROMAIN = 19
+LOXMAIN = 26
+PRESS = 5
 
 
 [DataConfig]
@@ -55,14 +56,21 @@ KERO_MAX_PSI = 750
 [PressureADCConfig]
 # example values
 LOX_PSI1 = [6,7]
+KERO_PSI1 = [5,4]
+PRESS_TANK = [2,3]
+
 
 [MA]
 # m, b format
 MA_FILTER_LEN = 20
 
 [PressureCalibration]
-LOX_PSI1 = [-943, 0,1873, 100, 3]
-#KERO_PSI2 =
+#
+# [y2, y1, x2, x1, b]
+# [m, 0, 1, 0, b]
+LOX_PSI1 = [-942, 0,1873, 100, 3]
+KERO_PSI2 = [-943, 0, 1873, 10, 3]
+
 
 # pid controller gains
 [LOXPIDGains]

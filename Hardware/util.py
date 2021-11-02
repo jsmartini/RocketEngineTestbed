@@ -1,4 +1,8 @@
 import datetime
 
 
-TS = datetime.datetime.now().timestamp # timestamp macro
+TS = lambda : datetime.datetime.now().timestamp() # timestamp macro
+
+
+if __name__ == "__main__":
+    print(TS())

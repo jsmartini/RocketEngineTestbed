@@ -54,10 +54,6 @@ def disable_2way():
     for pin in way2.keys():
         GPIO.output(way2[pin], 1)
 
-def reset_gpio():
-    GPIO.cleanup()
-    GPIO.setmode(GPIO.BCM)
-
 def press_propellant_tanks():
     global SYS, HardwareConfig
     GPIO.output(HardwareConfig["Solenoid_HE_ENTRY"], 0)
@@ -103,6 +99,18 @@ def lox_entry_open():
 def kero_entry_open():
     GPIO.output(HardwareConfig["Solenoid_KERO_ENTRY"], 0)
     SYS["Ignition"]["KERO_ENTRY_OPEN"] = True
+
+def reset_gpio():
+    #GPIO.cleanup()
+    #GPIO.setmode(GPIO.BCM)
+
+    depress_propellant_tanks()
+    lox_vent_off()
+    kero_vent_off()
+    lox_entry_close()
+    kero_entry_close()
+    disable_2way()
+
 
 from time import sleep
 def ignition():

@@ -18,7 +18,7 @@ def blocking_async(thread_loop):
     asyncio.set_event_loop(thread_loop)
     remoteCLICoro = remoteCLI(
                 node_name = "Remote Command Parser",
-                update_tick=0.1,
+                update_tick=0.001,
                 port = CONFIG["DataConfig"]["CMD_PROMPT_PORT"]
             )
     print("Running RemoteCLI Daemon")
@@ -32,23 +32,23 @@ def non_blocking_async(thread_loop):
             *[
             SystemStatePub(
                 node_name = "System State Reporter",
-                update_tick=0.1,
+                update_tick=0.05,
                 port = CONFIG["DataConfig"]["SYSTEM_STATE_PORT"]
             ),
             PressureControllerPub(
                 node_name = "Pressure PID Controllers",
-                update_tick=0.1,
+                update_tick=0.05,
                 port = CONFIG["DataConfig"]["PRESSURE_ERROR_DATAFEED_PORT"]
             ),
             LoadCellPub(
                 node_name="Load Cell Sensor Data Aquisition",
-                update_tick=0.01,
+                update_tick=0.05,
                 cell_name = "Load Sensor 1",
                 port = CONFIG["DataConfig"]["LOAD_CELL_DATAFEED_PORT"]
             ),
             PressureDataPub(
                 node_name='Pressure Data Aquisition',
-                update_tick=0.1, # a tenth of a second latency
+                update_tick=0.05, # a tenth of a second latency
                 port=CONFIG["DataConfig"]["PRESSURE_DATAFEED_PORT"],
                 calibration = CONFIG["PressureCalibration"],
                 sensor_tuples=[[k,*CONFIG["PressureADCConfig"][k]] for k in CONFIG["PressureADCConfig"]]

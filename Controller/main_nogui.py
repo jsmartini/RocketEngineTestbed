@@ -1,7 +1,12 @@
 
 from config import *
-from loadcellSub import *
-from pressureSub import *
+#from loadcellSub import *
+#from pressureSub import *
+
+
+from influxRecorder import InfluxRecorderPressure as PressureRecorder
+from influxRecorder import InfluxRecorderLoadCell as LoadCellRecorder
+
 import datetime
 import asyncio
 from queue import deque

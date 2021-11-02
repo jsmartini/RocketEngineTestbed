@@ -49,4 +49,4 @@ if __name__ == "__main__":
     volr.setOnVoltageRatioChangeHandler(onVoltage)
     volr.openWaitForAttachment(5000)
     while 1:
-        sleep(0.5)
+        pass

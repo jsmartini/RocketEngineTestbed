@@ -49,6 +49,7 @@ commands["help"] = command_list
 def execute(cmd):
     global commands
     if cmd in commands.keys():
+        if cmd == "help": return "\n".join(list(commands.keys()))
         return f"Executed {commands[cmd]()}"
     else:
         return "No Command Found"
@@ -65,7 +66,7 @@ async def remoteCLI(**kwargs):
     socket.bind(f"tcp://*:{port}")
 
     while True:
-
+        print("Waiting for next command")
         """
         
         command packet
