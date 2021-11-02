@@ -2,6 +2,8 @@
 The final iteration (0MQ)
 
 
+Written by Jonathan Martini
+
 This is the final iteration of the Alabama Rocketry Association Rocket Engine Test Bed Software
 
 temp - Example ZeroMQ(0MQ) pub/sub req/rep DDS models for data aquisitioning and remote function calling
